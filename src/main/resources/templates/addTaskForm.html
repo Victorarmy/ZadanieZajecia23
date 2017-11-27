@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <h3>Add task</h3>
+    <form method="post" th:action="${(#mvc.url('TC#addNewTask')).build()}" th:object="${task}">
+
+        Name of the task: <br/>
+        <input required="required" type="text" placeholder="Name of the task" min="3" th:field="*{name}"/><br/>
+        <br/>
+
+        Description: <br/>
+        <textarea required="required" placeholder="Description" min="5" th:field="*{description}"/><br/>
+        <br/>
+
+        Category: <br/>
+        <select required="required" th:field="*{category.id}">
+            <option th:text="CHOOSE" value=""></option>
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select><br/>
+        <br/>
+
+        Probably finish date: <br/>
+        <input required="required" type="date" th:field="*{endDate}"/><br/>
+        <input type="submit" th:value="Add"/>
+    </form>
+</body>
+</html>

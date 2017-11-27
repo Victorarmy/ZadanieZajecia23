@@ -1,0 +1,1 @@
+insert into hibernate.categories (name) values('undefined')

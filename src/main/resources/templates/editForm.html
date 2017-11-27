@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+
+<body>
+    <h3>Task edit</h3>
+    <h3 th:if="${changed}" th:text="${changed}"/>
+    <form th:action="@{/tasks/{id}(id = ${task.id})}" method="post" th:object="${task}">
+
+        Name of the task: <br/>
+        <input required="required" type="text" placeholder="Name of the task" min="3" th:field="*{name}"/><br/>
+
+        Description: <br/>
+        <textarea required="required" placeholder="Description" th:field="*{description}"/><br/>
+
+        Probably finish date: <br/>
+        <input required="required" type="date" min="5" th:field="*{endDate}"/><br/>
+        <br/>
+
+        <select required="required" th:field="*{category.id}">
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select><br/>
+
+        <select name="isDone" required="required" th:field="*{done}">
+            <option th:value="true" th:text="Done"/>
+            <option th:value="false" th:text="Undone"/>
+        </select><br/>
+        <br/>
+
+        <fieldset>
+            <legend>Optional</legend>
+
+            Duration:<br/>
+            <input name="duration" type="number" th:placeholder="Hours" th:field="*{duration}"/><br/>
+
+            Actual end date:<br/>
+            <input type="date" th:field="*{actualEndDate}"/><br/>
+
+        </fieldset>
+        <input type="submit" th:value="Change"/>
+    </form>
+</body>
+</html>

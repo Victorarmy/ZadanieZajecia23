@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h4> Tasks: </h4>
+<form th:action="@{/tasks/done}" method="post">
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Is done?</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Probable end date</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task, rowStat : ${tasks}">
+                <td>
+                    <input type="checkbox"
+                        th:value="${task.id}"
+                        th:name="ids"
+                        th:checked="${task.done}"/>
+                </td>
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.category.name}"></td>
+            <td th:text="${task.endDate}"></td>
+            <td><a th:href="${task.id}" th:text="Edit"></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" th:value="Send"/>
+</form>
+</body>
+</html>

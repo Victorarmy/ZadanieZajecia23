@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="'Zarządzanie zadaniami'"></h1>
+    <div th:each="option, rowStat: ${options}">
+        <a th:href="@{__${#httpServletRequest.requestURL.toString()}____${option.url}__}" th:text="${rowStat.index + 1} + ' ' + ${option}"></a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="${(#mvc.url('CC#addCategory')).build()}" method="post" th:object="${category}">
+        Category name:<br/>
+        <input required="required" type="text" th:field="*{name}"/><br/>
+        <input type="submit" th:value="Add"/>
+    </form>
+</body>
+</html>

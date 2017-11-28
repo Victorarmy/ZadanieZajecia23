@@ -22,7 +22,7 @@ public class TaskFilterService {
         return all
                 .stream()
                 .filter(task -> !task.getDone())
-                .sorted(Comparator.comparing(Task::getEndDate).reversed())
+                .sorted(Comparator.comparing(Task::getEndDate))
                 .collect(
                         Collectors.toList());
     }

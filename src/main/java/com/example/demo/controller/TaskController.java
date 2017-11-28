@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dao.CategoryPersistenceService;
 import com.example.demo.dao.TaskPersistenceService;
 import com.example.demo.model.Task;
+import com.example.demo.model.TaskChangeWrapper;
 import com.example.demo.service.TaskFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,14 +63,12 @@ public class TaskController {
     }
 
     @PostMapping("/done")
-    public String matchDone(@RequestParam(value = "ids", required = false) long[] ids,
+    public String matchDone(@ModelAttribute TaskChangeWrapper taskChangeWrapper,
                             Model model) {
 
         //TODO Get this done by List<Task> not by the ID's
         //TODO Select all button
-
-        taskPersistenceService.updateTaskAsDone(ids);
-
+        taskChangeWrapper.getTaskList().forEach(System.out::println);
         List<Task> tasks = taskFilterService.filterUnfinishedTasks(taskPersistenceService.findAllUnfinished());
         model.addAttribute("tasks", tasks);
         return "showTasks";
@@ -79,6 +78,7 @@ public class TaskController {
     public String getAllRecords(Model model) {
         List<Task> tasks = taskFilterService.filterUnfinishedTasksInOrderFromNearestEndDate(taskPersistenceService.findAll());
         model.addAttribute("tasks", tasks);
+        model.addAttribute("taskChangeWrapper", new TaskChangeWrapper());
         return "showTasks";
     }
 

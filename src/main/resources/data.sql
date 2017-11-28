@@ -1,1 +1,1 @@
-insert into hibernate.categories (name) values('undefined')
+insert into hibernate.categories (name) values('Undefined')

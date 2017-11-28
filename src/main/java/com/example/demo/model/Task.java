@@ -30,6 +30,16 @@ public class Task {
     public Task() {
     }
 
+    public Task(String name, String description, Date endDate, boolean done, int duration, Date actualEndDate, Category category) {
+        this.name = name;
+        this.description = description;
+        this.endDate = endDate;
+        this.done = done;
+        this.duration = duration;
+        this.actualEndDate = actualEndDate;
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
@@ -92,5 +102,19 @@ public class Task {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", endDate=" + endDate +
+                ", done=" + done +
+                ", duration=" + duration +
+                ", actualEndDate=" + actualEndDate +
+                ", category=" + category +
+                '}';
     }
 }

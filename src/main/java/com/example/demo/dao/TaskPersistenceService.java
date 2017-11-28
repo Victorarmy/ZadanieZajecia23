@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Task;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -33,6 +32,7 @@ public class TaskPersistenceService {
     public void updateTaskAsDone(long[] ids) {
         int doneOperations = 0;
         Query query = entityManager.createQuery("update Task t set t.done = true, t.actualEndDate =:date where t.id = :id");
+
         for (long id : ids) {
             query.setParameter("date", Date.valueOf(LocalDate.now()));
             query.setParameter("id", id);
@@ -42,7 +42,6 @@ public class TaskPersistenceService {
             if (doneOperations % 10 == 0) {
                 entityManager.flush();
                 entityManager.clear();
-                System.out.println("FLUSH AND CLEAR");
             }
         }
     }

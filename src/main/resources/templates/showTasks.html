@@ -6,7 +6,7 @@
 </head>
 <body>
 <h4> Tasks: </h4>
-<form th:action="@{/tasks/done}" method="post">
+<form th:action="@{/tasks/done}" method="post" th:object="${taskChangeWrapper}">
     <table border="1px">
         <thead>
             <tr>
@@ -22,9 +22,8 @@
             <tr th:each="task, rowStat : ${tasks}">
                 <td>
                     <input type="checkbox"
-                        th:value="${task.id}"
-                        th:name="ids"
-                        th:checked="${task.done}"/>
+                            th:value="${task.id}"
+                            th:field="*{taskList[__${rowStat.index}__].id}"/>
                 </td>
             <td th:text="${task.name}"></td>
             <td th:text="${task.description}"></td>

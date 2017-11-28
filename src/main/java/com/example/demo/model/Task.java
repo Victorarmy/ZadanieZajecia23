@@ -93,4 +93,18 @@ public class Task {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", endDate=" + endDate +
+                ", done=" + done +
+                ", duration=" + duration +
+                ", actualEndDate=" + actualEndDate +
+                ", category=" + category +
+                '}';
+    }
 }

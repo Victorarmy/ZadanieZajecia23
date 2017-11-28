@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -62,13 +63,9 @@ public class TaskController {
     }
 
     @PostMapping("/done")
-    public String matchDone(@RequestParam(value = "ids", required = false) long[] ids,
-                            Model model) {
+    public String matchDone(@RequestParam List<Task> doneTasks, Model model) {
 
-        //TODO Get this done by List<Task> not by the ID's
         //TODO Select all button
-
-        taskPersistenceService.updateTaskAsDone(ids);
 
         List<Task> tasks = taskFilterService.filterUnfinishedTasks(taskPersistenceService.findAllUnfinished());
         model.addAttribute("tasks", tasks);

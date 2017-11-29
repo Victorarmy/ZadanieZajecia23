@@ -1,13 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.CategoryPersistenceService;
+import com.example.demo.dao.SpringDataRepository;
 import com.example.demo.dao.TaskPersistenceService;
 import com.example.demo.model.Task;
 import com.example.demo.service.TaskFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -18,12 +21,14 @@ public class TaskController {
     private TaskPersistenceService taskPersistenceService;
     private CategoryPersistenceService categoryPersistenceService;
     private TaskFilterService taskFilterService;
+    private SpringDataRepository springDataRepository;
 
     @Autowired
-    public TaskController(TaskPersistenceService taskPersistenceService, CategoryPersistenceService categoryPersistenceService, TaskFilterService taskFilterService) {
+    public TaskController(TaskPersistenceService taskPersistenceService, CategoryPersistenceService categoryPersistenceService, TaskFilterService taskFilterService, SpringDataRepository springDataRepository) {
         this.taskPersistenceService = taskPersistenceService;
         this.categoryPersistenceService = categoryPersistenceService;
         this.taskFilterService = taskFilterService;
+        this.springDataRepository = springDataRepository;
     }
 
     @PostMapping("{id}")
@@ -43,9 +48,7 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    public String getInformationAboutCertainTask(@PathVariable(name = "id") Long id, Model model) {
-
-        Task task = taskPersistenceService.find(id);
+    public String getInformationAboutCertainTask(@PathVariable(name = "id") Task task, Model model) {
         model.addAttribute("task", task);
         model.addAttribute("categories", categoryPersistenceService.findAll());
         return "editForm";
@@ -62,13 +65,15 @@ public class TaskController {
     }
 
     @PostMapping("/done")
-    public String matchDone(@RequestParam(value = "ids", required = false) long[] ids,
+    public String matchDone(@RequestParam(value = "ids", required = false) List<Task> tasksFromReq,
                             Model model) {
 
         //TODO Get this done by List<Task> not by the ID's
         //TODO Select all button
 
-        taskPersistenceService.updateTaskAsDone(ids);
+//        taskPersistenceService.updateTaskAsDone(ids);
+
+        tasksFromReq.forEach(System.out::println);
 
         List<Task> tasks = taskFilterService.filterUnfinishedTasks(taskPersistenceService.findAllUnfinished());
         model.addAttribute("tasks", tasks);
@@ -76,9 +81,9 @@ public class TaskController {
     }
 
     @GetMapping("/undone")
-    public String getAllRecords(Model model) {
+    public String getAllRecords(Model model, Pageable pageable) {
         List<Task> tasks = taskFilterService.filterUnfinishedTasksInOrderFromNearestEndDate(taskPersistenceService.findAll());
-        model.addAttribute("tasks", tasks);
+        model.addAttribute("tasks", springDataRepository.findAll(pageable));
         return "showTasks";
     }
 

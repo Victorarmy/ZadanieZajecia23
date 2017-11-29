@@ -1,11 +1,12 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "TASKS")
-public class Task {
+public class Task implements Serializable {
 
     @Id
     @GeneratedValue

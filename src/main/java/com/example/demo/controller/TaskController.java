@@ -68,7 +68,6 @@ public class TaskController {
     public String matchDone(@RequestParam(value = "ids", required = false) List<Task> tasksFromReq,
                             Model model) {
 
-        //TODO Get this done by List<Task> not by the ID's
         //TODO Select all button
 
 //        taskPersistenceService.updateTaskAsDone(ids);

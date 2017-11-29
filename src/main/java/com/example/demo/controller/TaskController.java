@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,9 +43,9 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    public String getInformationAboutCertainTask(@PathVariable(name = "id") Long id, Model model) {
+    public String getInformationAboutCertainTask(@PathVariable(name = "id") Task task, Model model) {
 
-        Task task = taskPersistenceService.find(id);
+//        Task task = taskPersistenceService.find(id);
         model.addAttribute("task", task);
         model.addAttribute("categories", categoryPersistenceService.findAll());
         return "editForm";

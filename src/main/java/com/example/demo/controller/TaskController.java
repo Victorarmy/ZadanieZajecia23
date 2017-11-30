@@ -6,22 +6,28 @@ import com.example.demo.dao.TaskPersistenceService;
 import com.example.demo.model.Task;
 import com.example.demo.service.TaskFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @Controller
 @RequestMapping("/tasks")
+@PropertySource("classpath:messages.properties")
 public class TaskController {
 
     private TaskPersistenceService taskPersistenceService;
     private CategoryPersistenceService categoryPersistenceService;
     private TaskFilterService taskFilterService;
     private SpringDataRepository springDataRepository;
+
+    @Autowired
+    private Environment environment;
 
     @Autowired
     public TaskController(TaskPersistenceService taskPersistenceService, CategoryPersistenceService categoryPersistenceService, TaskFilterService taskFilterService, SpringDataRepository springDataRepository) {
@@ -39,7 +45,7 @@ public class TaskController {
         taskPersistenceService.updateTask(task);
         Task changedTask = taskPersistenceService.find(id);
         model.addAttribute("task", changedTask);
-        model.addAttribute("changed", "Task changed");
+        model.addAttribute("changed",  environment.getProperty("task.changed") );
         model.addAttribute("categories", categoryPersistenceService.findAll());
 
         //TODO make it resolved by spring property source

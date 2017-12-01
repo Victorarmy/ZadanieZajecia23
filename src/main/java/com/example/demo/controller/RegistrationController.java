@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.RegistrationPersistenceService;
+import com.example.demo.registration.RegistrationPersistenceService;
 import com.example.demo.exception.AccountExistsException;
 import com.example.demo.model.User;
 import com.example.demo.model.UserDTO;
@@ -35,7 +35,7 @@ public class RegistrationController {
     @PostMapping
     public String registrationProcess(@ModelAttribute UserDTO registrationUserDTO, Model model) {
         System.out.println(registrationUserDTO.getEmail());
-        User user = registrationPersistenceService.registerNewUserAccount(registrationUserDTO);
+        User user = registrationPersistenceService.registerNewUserAccountWithDefaultRole(registrationUserDTO);
         model.addAttribute("user", user);
         return "successfulRegistration";
     }

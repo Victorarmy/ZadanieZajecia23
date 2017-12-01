@@ -10,10 +10,10 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 @Repository
-@Transactional
+@Transactional()
 public class UserRepository {
 
-    @PersistenceContext
+    @PersistenceContext()
     private EntityManager entityManager;
 
     public User save(User user) {

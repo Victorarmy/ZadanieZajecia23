@@ -24,6 +24,8 @@ public class User implements Serializable{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<>();;
 
+    private boolean enabled;
+
     public User() {
     }
 
@@ -52,6 +54,14 @@ public class User implements Serializable{
 
     public Set<UserRole> getRoles() {
         return roles;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public static class UserBuilder {

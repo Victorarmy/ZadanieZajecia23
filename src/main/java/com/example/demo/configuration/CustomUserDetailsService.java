@@ -27,7 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         com.example.demo.model.User user = userRepository.findByEmail(login);
 
-        User userDetails = new User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoles()));
+        User userDetails = new User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true,
+                getAuthorities(user.getRoles()));
 
         return userDetails;
     }
